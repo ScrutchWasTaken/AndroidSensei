@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">VMSAlpha</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sensors_list">SensorsListActivity</string>
+
+
+    <string name="Go">Go</string>
+</resources>

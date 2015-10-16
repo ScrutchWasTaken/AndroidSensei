@@ -1,6 +1,5 @@
 package fr.scrutch.estelle.vmsalpha;
 
-//Je fais tout dans une même activité parce que voilà
 
 import android.content.Context;
 import android.content.Intent;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         final ListView listview = (ListView) findViewById(R.id.listview);
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,deviceSensorsName);
-//        CustomAdapter adapter = new CustomAdapter(this, deviceSensors);
+        //CustomAdapter adapter = new CustomAdapter(this, deviceSensors);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 //choper le capteur et changer d'activité pour l'exploiter
                 //le onItemClickListener agit comme un bouton pour le changement de vue
                 goSensorClicked();
+                //goClicked();
             }
         });
 
@@ -90,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //je refais la même classe précédente mais pour quand la liste est constituée des objets
-    public void goClicked() {
-        Intent intent = new Intent(this, SensorClickedActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, theSensorClicked);
-        startActivity(intent);
-    }
+//    public void goClicked() {
+//        Intent intent = new Intent(this, SensorClickedActivity.class);
+//        intent.putExtra(EXTRA_MESSAGE, theSensorClicked);
+//        startActivity(intent);
+//    }
 }

@@ -21,6 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private SensorManager mSensorManager;
+    //
     private String sensorClicked;
     private String theSensorClicked;
     public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";

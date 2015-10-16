@@ -30,30 +30,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Create the sensor manager to get the sensors'list
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         final List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
-        //1- choper les noms des capteurs (pour les mettre en id des boutons créés?)
-        List<String> deviceSensorsName = new ArrayList<>();
-        for(Sensor s : deviceSensors) {
-            deviceSensorsName.add(s.getName());
-        }
+        //Create a list with just sensors' names (replaced by a CustomAdapter)
+        //GOES WITH the ArraAdapter
+//        List<String> deviceSensorsName = new ArrayList<>();
+//        for(Sensor s : deviceSensors) {
+//            deviceSensorsName.add(s.getName());
+//        }
 
         final ListView listview = (ListView) findViewById(R.id.listview);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,deviceSensorsName);
-        //CustomAdapter adapter = new CustomAdapter(this, deviceSensors);
+        //Create the adapter that will be shown (ArrayAdater goes with the deviceSensorsName above)
+        //The 2nd will be the one we use but the "ontiemclick" function doesn't work yet
+//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,deviceSensorsName);
+        CustomAdapter adapter = new CustomAdapter(this, deviceSensors);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                sensorClicked = ((TextView)view).getText().toString();
-                //theSensorClicked = (String) getListAdapter().getItem(position);
-                //String sizeDeviceSensor = String.valueOf(deviceSensors.size());
-                //Toast.makeText(getBaseContext(), sensorClicked, Toast.LENGTH_LONG).show(); //param: context, text,durée
-                //choper le capteur et changer d'activité pour l'exploiter
-                //le onItemClickListener agit comme un bouton pour le changement de vue
+                //This function changes the activity (selecting the sensor)
+
+                //Create the object showed
+                //sensorClicked = ((TextView)view).getText().toString();
+                theSensorClicked = parent.getItemAtPosition(position).toString();
+                //Toast is to show a variable in a little window that appears and disapperas quite quickly
+                //Toast.makeText(getBaseContext(), sensorClicked, Toast.LENGTH_LONG).show(); //parameters: context, text, time shown
+                //Next is the function to change the view (with the name of the sensor (1st) or the object (2nd)
                 goSensorClicked();
                 //goClicked();
             }
@@ -83,16 +89,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Change the Activity but doesn't get the sensor yet
     public void goSensorClicked() {
         Intent intent = new Intent(this, SensorClickedActivity.class);
         intent.putExtra(EXTRA_MESSAGE, sensorClicked);
         startActivity(intent);
     }
 
-    //je refais la même classe précédente mais pour quand la liste est constituée des objets
-//    public void goClicked() {
-//        Intent intent = new Intent(this, SensorClickedActivity.class);
-//        intent.putExtra(EXTRA_MESSAGE, theSensorClicked);
-//        startActivity(intent);
-//    }
 }

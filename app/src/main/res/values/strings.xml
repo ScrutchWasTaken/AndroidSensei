@@ -7,4 +7,6 @@
 
 
     <string name="Go">Go</string>
+    <string name="ShowValuesButton">Show Values</string>
+    <string name="title_activity_activity_sensors_values">activity_sensors_values</string>
 </resources>

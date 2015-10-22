@@ -20,6 +20,15 @@
             android:name=".SensorClickedActivity"
             android:label="@string/title_activity_sensors_list" >
         </activity>
+        <activity
+            android:name=".activity_sensors_values"
+            android:label="@string/title_activity_activity_sensors_values"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.scrutch.estelle.vmsalpha.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

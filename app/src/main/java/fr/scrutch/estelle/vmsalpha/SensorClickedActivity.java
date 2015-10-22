@@ -1,13 +1,24 @@
 package fr.scrutch.estelle.vmsalpha;
 
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.hardware.SensorEvent;
+import android.widget.Toast;
 
 public class SensorClickedActivity extends AppCompatActivity {
+
+    //test variables
+    final double[] gravity=null;
+    final double[] linear_acceleration = null;
+    SensorEvent data;
+    private long lastUpdate;
+    //data
+    //end test variables
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,10 +27,9 @@ public class SensorClickedActivity extends AppCompatActivity {
 
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-
         TextView textView = new TextView(this);
         textView.setTextSize(20);
-        textView.setText(message+":");
+        textView.setText(message+":"+"\n"+lastUpdate);
         setContentView(textView);
         /*
         AdapterView   = contener dans l'affichage et une liste dans le modèle
@@ -51,4 +61,29 @@ public class SensorClickedActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    ///////////////////Starting Sensors test
+
+
+    private void getAccelerometer(SensorEvent event) {
+        float[] values = event.values;
+        // Movement
+        float x = values[0];
+        float y = values[1];
+        float z = values[2];
+
+        float accelerationSquareRoot = (x * x + y * y + z * z)/(SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
+        long actualTime = event.timestamp;
+        if (accelerationSquareRoot >= 2) //
+        {
+            if (actualTime - lastUpdate < 200) {
+                return;
+            }
+            lastUpdate = actualTime;
+            Toast.makeText(this, "Device was shuffed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //////////////////End test
 }

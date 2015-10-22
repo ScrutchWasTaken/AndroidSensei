@@ -16,9 +16,10 @@ public class SensorClickedActivity extends AppCompatActivity {
 
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
+
         TextView textView = new TextView(this);
         textView.setTextSize(20);
-        textView.setText(message);
+        textView.setText(message+":");
         setContentView(textView);
         /*
         AdapterView   = contener dans l'affichage et une liste dans le modèle

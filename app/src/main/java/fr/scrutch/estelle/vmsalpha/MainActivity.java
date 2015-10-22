@@ -22,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private SensorManager mSensorManager;
-    private String sensorClicked;
+    private Sensor sensorClicked;
     private String theSensorClicked;
     public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
 
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //Create the object showed
                 //sensorClicked = ((TextView)view).getText().toString();
+                sensorClicked = (Sensor)parent.getItemAtPosition(position);
                 theSensorClicked = parent.getItemAtPosition(position).toString();
                 //Toast is to show a variable in a little window that appears and disapperas quite quickly
                 //Toast.makeText(getBaseContext(), sensorClicked, Toast.LENGTH_LONG).show(); //parameters: context, text, time shown
@@ -93,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
     //Change the Activity but doesn't get the sensor yet
     public void goSensorClicked() {
         Intent intent = new Intent(this, SensorClickedActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, sensorClicked);
+        intent.putExtra(EXTRA_MESSAGE, sensorClicked.getName());
+        //intent.putExtra(EXTRA_MESSAGE, theSensorClicked);
         startActivity(intent);
     }
 

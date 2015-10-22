@@ -36,10 +36,8 @@ public class CustomAdapter extends ArrayAdapter<Sensor> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.label);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+        //ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         textView.setText(values.get(position).getName());
         return rowView;
     }
-
-
 }

@@ -25,8 +25,8 @@ public class SensorClickedActivity extends AppCompatActivity {
         on à un modèle de chacune des liste de la table que l'on souhaite afficher
         on aura un xml qui décrit le format de la ligne  cf tuto "fogela"
         != techniques : prendre le tuto et dérouller.
-            Création de sélection de capteurs sauvegardable (profil chargeable).
-         */
+        Création de sélection de capteurs sauvegardable (profil chargeable).
+        */
     }
 
     @Override

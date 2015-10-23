@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,27 +28,50 @@ public class MainActivity extends AppCompatActivity {
     private String theSensorClicked;
     public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
 
+    private BullshitsDataSource dataSource;
+    private Date leTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* Le data corporate bullshit start here */
+        dataSource = new BullshitsDataSource(this);
+
+        try {
+            dataSource.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        for(int i=0 ; i<100 ; i++ ) {
+            leTime = new Date();    //System.currentTimeMillis()
+            System.out.println(leTime.getTime());
+            dataSource.createBullshit(leTime);
+        }
+
+        System.out.println(dataSource.getAllTheBullshit().toString());
+        //Log.w("DB", dataSource.getAllTheBullshit().toString());
+
+
         //Create the sensor manager to get the sensors'list
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         final List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
-        //Create a list with just sensors' names (replaced by a CustomAdapter)
-        //GOES WITH the ArraAdapter
-//        List<String> deviceSensorsName = new ArrayList<>();
-//        for(Sensor s : deviceSensors) {
-//            deviceSensorsName.add(s.getName());
-//        }
+        /* Create a list with just sensors' names (replaced by a CustomAdapter)
+        GOES WITH the ArraAdapter
+        List<String> deviceSensorsName = new ArrayList<>();
+        for(Sensor s : deviceSensors) {
+            deviceSensorsName.add(s.getName());
+        }*/
 
         final ListView listview = (ListView) findViewById(R.id.listview);
 
-        //Create the adapter that will be shown (ArrayAdater goes with the deviceSensorsName above)
-        //The 2nd will be the one we use but the "ontiemclick" function doesn't work yet
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,deviceSensorsName);
+        /*Create the adapter that will be shown (ArrayAdater goes with the deviceSensorsName above)
+        The 2nd will be the one we use but the "ontiemclick" function doesn't work yet
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,deviceSensorsName);*/
+
         CustomAdapter adapter = new CustomAdapter(this, deviceSensors);
         listview.setAdapter(adapter);
 

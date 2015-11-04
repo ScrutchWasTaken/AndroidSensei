@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     //Change the Activity but doesn't get the sensor yet
     public void goSensorClicked() {
         Intent intent = new Intent(this, SensorClickedActivity.class);
+        //could try to putExtra the sensor itself
         intent.putExtra(EXTRA_MESSAGE, sensorClicked.getName());
         //intent.putExtra(EXTRA_MESSAGE, theSensorClicked);
         startActivity(intent);

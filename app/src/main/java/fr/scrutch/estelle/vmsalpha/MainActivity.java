@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 //Create the object showed
                 //sensorClicked = ((TextView)view).getText().toString();
                 sensorClicked = (Sensor)parent.getItemAtPosition(position);
-                theSensorClicked = parent.getItemAtPosition(position).toString();
+                //theSensorClicked = sensorClicked.toString();
                 //Toast is to show a variable in a little window that appears and disapperas quite quickly
                 //Toast.makeText(getBaseContext(), sensorClicked, Toast.LENGTH_LONG).show(); //parameters: context, text, time shown
                 //Next is the function to change the view (with the name of the sensor (1st) or the object (2nd)

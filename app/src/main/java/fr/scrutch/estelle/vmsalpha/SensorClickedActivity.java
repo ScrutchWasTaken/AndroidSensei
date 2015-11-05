@@ -30,11 +30,10 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 
         Intent intent = getIntent();
 
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         //get sensor by his name to catch data
         //aSensor = aSensorManager.getSensorList(Sensor.TYPE_ALL).get
         aSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
     }
 
     @Override
@@ -66,31 +65,37 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         TextView textView =  (TextView) findViewById(R.id.textView);
         TextView textView2 =  (TextView) findViewById(R.id.textView2);
         TextView textView3 =  (TextView) findViewById(R.id.textView3);
+        TextView textView4 = (TextView) findViewById(R.id.textView4);
 
-        time1 = System.currentTimeMillis();     //time before getting values
+        if(time1== 0)
+            time1 = System.currentTimeMillis();     //time before getting values
+//        time1 = event.timestamp;
         float[] values = event.values;
         // Movement
         float x = values[0];
         float y = values[1];
         float z = values[2];
 
+        if(time2==0)
+            time2 = System.currentTimeMillis();
 
-        time2 = event.timestamp;      //time after getting values
-
-            //Toast.makeText(this, "x:"+x+"\n"+"y:"+y+"\n"+"z:"+z, Toast.LENGTH_SHORT).show();
-            //R.id.textView(Long.toString(time1));
-
-            //the force of gravity must be eliminated => problem of the direction of the phone
-//            TextView textView = new TextView(this);
-//            textView.setTextSize(20);
-//            textView2.setText("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
-
+//        time2 = event.timestamp;      //time after getting values
+//            //Toast.makeText(this, "x:"+x+"\n"+"y:"+y+"\n"+"z:"+z, Toast.LENGTH_SHORT).show();
+//            //R.id.textView(Long.toString(time1));
+//
+//            //the force of gravity must be eliminated => problem of the direction of the phone
+////            TextView textView = new TextView(this);
+////            textView.setTextSize(20);
+////            textView2.setText("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
+//
         textView.setText(Long.toString(time1));
-//        setContentView(textViewTime2);
-        time3 = System.currentTimeMillis();
-        textView2.setText(Long.toString(time2));textView3.setText(Long.toString(time3));
-        setContentView(textView);setContentView(textView2);setContentView(textView3);   //Update view
-
+////        setContentView(textViewTime2);
+        if(time3==0)
+            time3 = System.currentTimeMillis();
+//        time3 = event.timestamp;
+        textView2.setText(Long.toString(time2));
+        textView3.setText(Long.toString(time3));
+        textView4.setText("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
 
     }
 

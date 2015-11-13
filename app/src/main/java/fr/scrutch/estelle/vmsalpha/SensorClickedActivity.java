@@ -14,13 +14,11 @@ import android.widget.Toast;
 
 public class SensorClickedActivity extends AppCompatActivity implements SensorEventListener {
 
-    //test variables
-//    private long lastUpdate = System.currentTimeMillis();
+    int count = 0;
     SensorManager aSensorManager;
     Sensor aSensor;
     long time1,time2,time3;
-    //end test variables
-    //TextView text1 = (TextView) findViewById(R.id.text1);
+    int sensorType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +28,13 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 
         Intent intent = getIntent();
 
-        //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+//        sensorType = intent.getStringExtra("sensorType");
+        sensorType = intent.getExtras().getInt("sensorType");
+        System.out.println(sensorType);
         //get sensor by his name to catch data
-        //aSensor = aSensorManager.getSensorList(Sensor.TYPE_ALL).get
+//        aSensor = (Sensor) message;
+//        {Sensor name="AK8963 3-axis Magnetic field sensor", vendor="Asahi Kasei", version=1, type=2, maxRange=2000.0, resolution=0.0625, power=6.8, minDelay=20000}
+//        System.out.println(Sensor.TYPE_MAGNETIC_FIELD); // => 2
         aSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
     }
 
@@ -58,52 +60,15 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         return super.onOptionsItemSelected(item);
     }
 
-    ///////////////////Starting Sensors test just accelerometer, working ;)
-
-
-    private void getAccelerometer(SensorEvent event) {
-        TextView textView =  (TextView) findViewById(R.id.textView);
-        TextView textView2 =  (TextView) findViewById(R.id.textView2);
-        TextView textView3 =  (TextView) findViewById(R.id.textView3);
-        TextView textView4 = (TextView) findViewById(R.id.textView4);
-
-        if(time1== 0)
-            time1 = System.currentTimeMillis();     //time before getting values
-//        time1 = event.timestamp;
-        float[] values = event.values;
-        // Movement
-        float x = values[0];
-        float y = values[1];
-        float z = values[2];
-
-        if(time2==0)
-            time2 = System.currentTimeMillis();
-
-//        time2 = event.timestamp;      //time after getting values
-//            //Toast.makeText(this, "x:"+x+"\n"+"y:"+y+"\n"+"z:"+z, Toast.LENGTH_SHORT).show();
-//            //R.id.textView(Long.toString(time1));
-//
-//            //the force of gravity must be eliminated => problem of the direction of the phone
-////            TextView textView = new TextView(this);
-////            textView.setTextSize(20);
-////            textView2.setText("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
-//
-        textView.setText(Long.toString(time1));
-////        setContentView(textViewTime2);
-        if(time3==0)
-            time3 = System.currentTimeMillis();
-//        time3 = event.timestamp;
-        textView2.setText(Long.toString(time2));
-        textView3.setText(Long.toString(time3));
-        textView4.setText("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
-
-    }
-
     @Override
     public void onSensorChanged(SensorEvent event) {
 //        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        if (sensorType == Sensor.TYPE_ACCELEROMETER) {
             getAccelerometer(event);
-//        }
+        }
+        if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
+            getMagnetic(event);
+        }
     }
 
     @Override
@@ -126,13 +91,67 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
     }
 
 
-    //////////////////End test
     ////////////////////////Other sensors:
+    private void getAccelerometer(SensorEvent event) {
+        count = (count+1)%300;
+        TextView textView =  (TextView) findViewById(R.id.textView);
+        TextView textView2 =  (TextView) findViewById(R.id.textView2);
+        TextView textView3 =  (TextView) findViewById(R.id.textView3);
+        TextView textView4 = (TextView) findViewById(R.id.textView4);
+
+        if(count==0)
+            time1 = System.nanoTime();     //time before getting values
+//        time1 = event.timestamp;
+        float[] values = event.values;
+        // Movement
+        float x = values[0];
+        float y = values[1];
+        float z = values[2];
+
+        if(count==0)
+            time2 = System.nanoTime();
+
+//        time2 = event.timestamp;      //time after getting values
+//            //Toast.makeText(this, "x:"+x+"\n"+"y:"+y+"\n"+"z:"+z, Toast.LENGTH_SHORT).show();
+//            //R.id.textView(Long.toString(time1));
+//            //the force of gravity must be eliminated => problem of the direction of the phone
+
+        textView.setText(Long.toString(time1));
+////        setContentView(textViewTime2);
+        if(count==0)
+            time3 = System.nanoTime();
+//        time3 = event.timestamp;
+        textView2.setText(Long.toString(time2));
+        textView3.setText(Long.toString(time3));
+        textView4.setText("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
+
+    }
+
+
     private void getMagnetic(SensorEvent event) {
+        count = (count+1)%300;
+        TextView textView =  (TextView) findViewById(R.id.textView);
+        TextView textView2 =  (TextView) findViewById(R.id.textView2);
+        TextView textView3 =  (TextView) findViewById(R.id.textView3);
+        TextView textView4 = (TextView) findViewById(R.id.textView4);
+
+        if(count==0)
+            time1 = System.nanoTime();     //time before getting values
+
         float[] values = event.values;
         //micro-Tesla µT ou uT
         float x = values[0];
 
+        if(count==0)
+            time2 = System.nanoTime();
+
+        textView.setText(Long.toString(time1));
+        if(count==0)
+            time3 = System.nanoTime();
+
+        textView2.setText(Long.toString(time2));
+        textView3.setText(Long.toString(time3));
+        textView4.setText("Ambiant magnetic field : " + x + " µT");
 
 
     }

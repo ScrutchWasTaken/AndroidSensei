@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private SensorManager mSensorManager;
     private Sensor sensorClicked;
     private String theSensorClicked;
-    public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
+//    public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 //Create the object showed
                 //sensorClicked = ((TextView)view).getText().toString();
                 sensorClicked = (Sensor)parent.getItemAtPosition(position);
+                System.out.println("//////////////////////////////////////////////// "+sensorClicked);
                 //theSensorClicked = sensorClicked.toString();
                 //Toast is to show a variable in a little window that appears and disapperas quite quickly
                 //Toast.makeText(getBaseContext(), sensorClicked, Toast.LENGTH_LONG).show(); //parameters: context, text, time shown
@@ -95,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
     public void goSensorClicked() {
         Intent intent = new Intent(this, SensorClickedActivity.class);
         //could try to putExtra the sensor itself
-        intent.putExtra(EXTRA_MESSAGE, sensorClicked.getName());
-        //intent.putExtra(EXTRA_MESSAGE, theSensorClicked);
+//        intent.putExtra(EXTRA_MESSAGE, sensorClicked.getName());
+        intent.putExtra("sensorType", sensorClicked.getType());
+        System.out.println("XZCVRBNFCGVHBJ?K" + sensorClicked.getType());
         startActivity(intent);
     }
 

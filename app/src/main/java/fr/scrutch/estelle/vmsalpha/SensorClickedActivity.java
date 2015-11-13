@@ -62,13 +62,20 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-//        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-        if (sensorType == Sensor.TYPE_ACCELEROMETER) {
-            getAccelerometer(event);
+        switch (sensorType){
+            case Sensor.TYPE_ACCELEROMETER: getAccelerometer(event); break;
+            case Sensor.TYPE_MAGNETIC_FIELD: getMagnetic(event); break;
+            default: getSensorType(event);
         }
-        if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
-            getMagnetic(event);
-        }
+//        if (sensorType == Sensor.TYPE_ACCELEROMETER) {
+//            getAccelerometer(event);
+//        }
+//        else if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
+//            getMagnetic(event);
+//        }
+//        else{
+//            getSensorType(event);
+//        }
     }
 
     @Override
@@ -156,6 +163,13 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 
     }
 
+    protected  void getSensorType(SensorEvent event){
+        TextView textView =  (TextView) findViewById(R.id.textView);
+//        TextView textView2 =  (TextView) findViewById(R.id.textView2);
+//        TextView textView3 =  (TextView) findViewById(R.id.textView3);
+//        TextView textView4 = (TextView) findViewById(R.id.textView4);
+        textView.setText(Integer.toString(sensorType));
+    }
 
 
     /////////////////////// End test

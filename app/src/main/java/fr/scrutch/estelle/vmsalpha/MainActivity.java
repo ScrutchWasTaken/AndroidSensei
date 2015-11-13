@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         //could try to putExtra the sensor itself
 //        intent.putExtra(EXTRA_MESSAGE, sensorClicked.getName());
         intent.putExtra("sensorType", sensorClicked.getType());
-        System.out.println("XZCVRBNFCGVHBJ?K" + sensorClicked.getType());
         startActivity(intent);
     }
 

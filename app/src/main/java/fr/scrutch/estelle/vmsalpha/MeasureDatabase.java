@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.Date;
 
 /**
  * Created by gael on 22/10/15.
@@ -31,7 +30,7 @@ public class MeasureDatabase extends SQLiteOpenHelper {
         db.execSQL(
                 "create table "
                         + TABLE_NAME + "(" + COLUMN_ID + " integer primary key autoincrement, "
-                        + COLUMN_NAME + ");"
+                        + COLUMN_NAME + "integer);"
         );
     }
 

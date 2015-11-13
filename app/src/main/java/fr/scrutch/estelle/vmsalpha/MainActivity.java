@@ -7,18 +7,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,8 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private String theSensorClicked;
     public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
 
-    private BullshitsDataSource dataSource;
-    private Date leTime;
+    public BullshitsDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         /* Le data corporate bullshit start here */
         dataSource = new BullshitsDataSource(this);
 
+        //System.nanoTime();
+
         try {
             dataSource.open();
         } catch (SQLException e) {
@@ -46,12 +42,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for(int i=0 ; i<100 ; i++ ) {
-            leTime = new Date();    //System.currentTimeMillis()
-            System.out.println(leTime.getTime());
-            dataSource.createBullshit(leTime);
+            //leTime = System.currentTimeMillis();
+            //System.out.println(leTime.getTime());
+            dataSource.createBullshit(System.currentTimeMillis());
         }
 
-        System.out.println(dataSource.getAllTheBullshit().toString());
+        //System.out.println(dataSource.getAllTheBullshit().toString());
+        System.out.println("Trying to get the performance summary....");
+
+        System.out.println(dataSource.getPerf());
+        //dataSource.close();
         //Log.w("DB", dataSource.getAllTheBullshit().toString());
 
 

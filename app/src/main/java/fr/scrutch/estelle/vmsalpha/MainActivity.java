@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Sensor sensorClicked;
     private String theSensorClicked;
 //    public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  //replaced by an "onclick" for checkboxes
                 //This function changes the activity (selecting the sensor)
 
                 //Create the object showed
                 //sensorClicked = ((TextView)view).getText().toString();
+//                sensorClicked = (Sensor)parent.getItemIdAtPosition(position);   //getItemAtPosition(position);
                 sensorClicked = (Sensor)parent.getItemAtPosition(position);
-                System.out.println("//////////////////////////////////////////////// "+sensorClicked);
+//                System.out.println("//////////////////////////////////////////////// "+sensorClicked);
                 //theSensorClicked = sensorClicked.toString();
                 //Toast is to show a variable in a little window that appears and disapperas quite quickly
                 //Toast.makeText(getBaseContext(), sensorClicked, Toast.LENGTH_LONG).show(); //parameters: context, text, time shown
@@ -101,4 +104,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+//    public void onCheckboxClicked(View view) {
+//    // Is the view now checked?
+//    boolean checked = ((CheckBox) view).isChecked();
+//
+//    // Check which checkbox was clicked
+//    switch(view.getId()) {
+//        case R.id.che:
+//            if (checked)
+//                // Put some meat on the sandwich
+//            else
+//                // Remove the meat
+//            break;
+//        case R.id.checkbox_cheese:
+//            if (checked)
+//                // Cheese me
+//            else
+//                // I'm lactose intolerant
+//            break;
+//    }
 }
+
+

@@ -34,6 +34,7 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         //get sensor by his name to catch data
 //        aSensor = (Sensor) message;
 //        {Sensor name="AK8963 3-axis Magnetic field sensor", vendor="Asahi Kasei", version=1, type=2, maxRange=2000.0, resolution=0.0625, power=6.8, minDelay=20000}
+//        resolution will be important => help user to chose the right sensor
 //        System.out.println(Sensor.TYPE_MAGNETIC_FIELD); // => 2
         aSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
     }
@@ -88,6 +89,7 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         // register this class as a listener for the orientation and
         // accelerometer sensors
         aSensorManager.registerListener(this,aSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),1000);
+        //en avoir plein => correspond au nbr de sensors selected
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +22,13 @@ public class CustomAdapter extends ArrayAdapter<Sensor> {
     private final Context context;
     //private final Sensor[] values;
     private final List<Sensor> values;
+    private boolean[] checkBoxState;
 
     public CustomAdapter(Context context, List<Sensor> values) {
         super(context, R.layout.rowlayout, values);
         this.context = context;
         this.values = values;
+        checkBoxState=new boolean[values.size()];
     }
 
 
@@ -38,6 +41,8 @@ public class CustomAdapter extends ArrayAdapter<Sensor> {
         TextView textView = (TextView) rowView.findViewById(R.id.label);
         //ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         textView.setText(values.get(position).getName());
+        CheckBox checkbox = (CheckBox) rowView.findViewById(R.id.checkbox);
+        checkbox.setChecked(checkBoxState[position]);
         return rowView;
     }
 }

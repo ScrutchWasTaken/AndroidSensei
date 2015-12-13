@@ -1,21 +1,17 @@
 package fr.scrutch.estelle.vmsalpha;
 
-import java.util.Calendar;
-import java.util.Date;
-
 /**
- * Created by gael on 23/10/15.
+ * Created by gael on 13/11/15.
  */
-public class Bullshit {
+public class Measure {
     private long id;
-    private Date time;
-
+    private long time;
 
     public long getId() {
         return id;
     }
 
-    public Date getTime() {
+    public long getTime() {
         return time;
     }
 
@@ -23,12 +19,12 @@ public class Bullshit {
         this.id = id;
     }
 
-    public void setTime(Date time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
     @Override
     public String toString() {
-        return time.toString();
+        return Long.toString(time);
     }
 }

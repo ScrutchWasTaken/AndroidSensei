@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,31 +13,53 @@ import android.widget.TextView;
 import android.hardware.SensorEvent;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class SensorClickedActivity extends AppCompatActivity implements SensorEventListener {
 
-    int count = 0;
-    SensorManager aSensorManager;
-    Sensor aSensor;
-    long time1,time2,time3;
-    int sensorType;
+    private int count = 0;
+    private SensorManager aSensorManager;
+    private Sensor aSensor;
+    private long time1,time2,time3;
+//    private String sensorType;
+    private String sensorSelected[];
+    private Bundle sensorType;
+
+    public SensorClickedActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.acceleration);
+        /// for test
+        TextView textView =  (TextView) findViewById(R.id.textView);
+        TextView textView2 =  (TextView) findViewById(R.id.textView2);
+        TextView textView3 =  (TextView) findViewById(R.id.textView3);
+        //end
 
 
         Intent intent = getIntent();
 
-//        sensorType = intent.getStringExtra("sensorType");
-        sensorType = intent.getExtras().getInt("sensorType");
+        sensorType = intent.getExtras();
         System.out.println(sensorType);
+//        sensorType = intent.getExtras().getInt("sensorType");
+
         //get sensor by his name to catch data
 //        aSensor = (Sensor) message;
 //        {Sensor name="AK8963 3-axis Magnetic field sensor", vendor="Asahi Kasei", version=1, type=2, maxRange=2000.0, resolution=0.0625, power=6.8, minDelay=20000}
 //        resolution will be important => help user to chose the right sensor
 //        System.out.println(Sensor.TYPE_MAGNETIC_FIELD); // => 2
         aSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+//        sensorSelected = sensorType.split("/");
+//        for (String sensor:sensorSelected
+//             ) {
+//            System.out.println(sensor+"\n");
+//        }
+//        textView.setText(sensorSelected[0]);
+//        textView2.setText(sensorSelected[1]);
+//        textView3.setText(sensorSelected[2]);
+//        aSensor =(Sensor)sensorSelected[0];
     }
 
     @Override
@@ -63,11 +86,11 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        switch (sensorType){
-            case Sensor.TYPE_ACCELEROMETER: getAccelerometer(event); break;
-            case Sensor.TYPE_MAGNETIC_FIELD: getMagnetic(event); break;
-            default: getSensorType(event);
-        }
+//        switch (sensorType){
+//            case Sensor.TYPE_ACCELEROMETER: getAccelerometer(event); break;
+//            case Sensor.TYPE_MAGNETIC_FIELD: getMagnetic(event); break;
+//            default: getSensorType(event);
+//        }
 //        if (sensorType == Sensor.TYPE_ACCELEROMETER) {
 //            getAccelerometer(event);
 //        }
@@ -170,7 +193,7 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 //        TextView textView2 =  (TextView) findViewById(R.id.textView2);
 //        TextView textView3 =  (TextView) findViewById(R.id.textView3);
 //        TextView textView4 = (TextView) findViewById(R.id.textView4);
-        textView.setText(Integer.toString(sensorType));
+//        textView.setText(sensorType);
     }
 
 

@@ -1,5 +1,6 @@
 package fr.scrutch.estelle.vmsalpha;
 
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
@@ -13,17 +14,21 @@ import android.widget.TextView;
 import android.hardware.SensorEvent;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SensorClickedActivity extends AppCompatActivity implements SensorEventListener {
 
     private int count = 0;
     private SensorManager aSensorManager;
+    private SensorManager bSensorManager;
     private Sensor aSensor;
     private long time1,time2,time3;
-//    private String sensorType;
-    private String sensorSelected[];
-    private Bundle sensorType;
+    private int[] sensorType;
+    private SensorManager mSensorManager;
+    private List<Sensor> sensorClicked;
 
     public SensorClickedActivity() {
     }
@@ -32,34 +37,18 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.acceleration);
-        /// for test
-        TextView textView =  (TextView) findViewById(R.id.textView);
-        TextView textView2 =  (TextView) findViewById(R.id.textView2);
-        TextView textView3 =  (TextView) findViewById(R.id.textView3);
-        //end
-
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensorClicked = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
         Intent intent = getIntent();
-
-        sensorType = intent.getExtras();
-        System.out.println(sensorType);
-//        sensorType = intent.getExtras().getInt("sensorType");
-
-        //get sensor by his name to catch data
-//        aSensor = (Sensor) message;
-//        {Sensor name="AK8963 3-axis Magnetic field sensor", vendor="Asahi Kasei", version=1, type=2, maxRange=2000.0, resolution=0.0625, power=6.8, minDelay=20000}
-//        resolution will be important => help user to chose the right sensor
-//        System.out.println(Sensor.TYPE_MAGNETIC_FIELD); // => 2
+        //Get the int[] from the putExtra in the MainActivity.java
+        sensorType = intent.getIntArrayExtra("index");
+        //We need the sensor manager to get the list of sensors in which the index is related to
         aSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-//        sensorSelected = sensorType.split("/");
-//        for (String sensor:sensorSelected
-//             ) {
-//            System.out.println(sensor+"\n");
-//        }
-//        textView.setText(sensorSelected[0]);
-//        textView2.setText(sensorSelected[1]);
-//        textView3.setText(sensorSelected[2]);
-//        aSensor =(Sensor)sensorSelected[0];
+        bSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+//        textView.setText(sensorClicked.get(sensorType[0]).toString());    //Test: return the right sensor ;)
+
     }
 
     @Override
@@ -86,19 +75,13 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-//        switch (sensorType){
-//            case Sensor.TYPE_ACCELEROMETER: getAccelerometer(event); break;
-//            case Sensor.TYPE_MAGNETIC_FIELD: getMagnetic(event); break;
-//            default: getSensorType(event);
-//        }
-//        if (sensorType == Sensor.TYPE_ACCELEROMETER) {
-//            getAccelerometer(event);
-//        }
-//        else if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
+        //TEST: the accelero works
+        if(sensorClicked.get(sensorType[0]).getType()== Sensor.TYPE_ACCELEROMETER){
+            getAccelerometer(event);
+        }
+        //TEST: the magnetic
+//        if(sensorClicked.get(sensorType[1]).getType()==Sensor.TYPE_MAGNETIC_FIELD){
 //            getMagnetic(event);
-//        }
-//        else{
-//            getSensorType(event);
 //        }
     }
 
@@ -110,8 +93,9 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
     protected void onResume() {
         super.onResume();
         // register this class as a listener for the orientation and
-        // accelerometer sensors
-        aSensorManager.registerListener(this,aSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),1000);
+        // accelerometer sensors LISTENER
+        aSensorManager.registerListener(this,aSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_FASTEST);
+//        bSensorManager.registerListener(this,aSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),SensorManager.SENSOR_DELAY_FASTEST);
         //en avoir plein => correspond au nbr de sensors selected
     }
 
@@ -120,28 +104,34 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         // unregister listener
         super.onPause();
         aSensorManager.unregisterListener(this);
+//        bSensorManager.unregisterListener(this);
+
     }
 
 
     ////////////////////////Other sensors:
     private void getAccelerometer(SensorEvent event) {
-        count = (count+1)%300;
+        count = (count+1)%300;  //to print just 1 value/300
+        //We have to get the textView of the layout
         TextView textView =  (TextView) findViewById(R.id.textView);
         TextView textView2 =  (TextView) findViewById(R.id.textView2);
         TextView textView3 =  (TextView) findViewById(R.id.textView3);
         TextView textView4 = (TextView) findViewById(R.id.textView4);
 
         if(count==0)
-            time1 = System.nanoTime();     //time before getting values
+//            time1 = System.nanoTime();     //time before getting values
+                time1 = System.currentTimeMillis();
 //        time1 = event.timestamp;
+
         float[] values = event.values;
-        // Movement
+        // Movement, get values
         float x = values[0];
         float y = values[1];
         float z = values[2];
 
         if(count==0)
-            time2 = System.nanoTime();
+//            time2 = System.nanoTime();
+                time2 = System.currentTimeMillis();
 
 //        time2 = event.timestamp;      //time after getting values
 //            //Toast.makeText(this, "x:"+x+"\n"+"y:"+y+"\n"+"z:"+z, Toast.LENGTH_SHORT).show();
@@ -150,9 +140,11 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
 
         textView.setText(Long.toString(time1));
 ////        setContentView(textViewTime2);
-        if(count==0)
-            time3 = System.nanoTime();
+        if(count==299)
+            time3 = System.currentTimeMillis();
+//            time3 = System.nanoTime();
 //        time3 = event.timestamp;
+        //time to print, printed on screen:
         textView2.setText(Long.toString(time2));
         textView3.setText(Long.toString(time3));
         textView4.setText("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
@@ -181,9 +173,9 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         if(count==0)
             time3 = System.nanoTime();
 
-        textView2.setText(Long.toString(time2));
-        textView3.setText(Long.toString(time3));
-        textView4.setText("Ambiant magnetic field : " + x + " µT");
+//        textView2.setText(Long.toString(time2));
+//        textView3.setText(Long.toString(time3));
+        textView3.setText("Ambiant magnetic field : " + x + " µT");
 
 
     }

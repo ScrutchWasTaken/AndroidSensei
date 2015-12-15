@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +35,6 @@ public class MainActivity extends ListActivity {
 
     private SensorManager mSensorManager;
     private List<Sensor> sensorClicked;
-    private List<Sensor> sensorsList;
 
     //    private List<Sensor> sensorSelected;
 //    private String theSensorClicked;
@@ -39,9 +42,9 @@ public class MainActivity extends ListActivity {
 //    public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
     private boolean[] checkedStates;
     private String sensorSelected;
-    private String sensorType;
+    private int[] index;
+    private int p=0;
 
-//    final List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,57 +66,34 @@ public class MainActivity extends ListActivity {
         listview.setChoiceMode(listview.CHOICE_MODE_MULTIPLE);
         listview.setTextFilterEnabled(true);
         setListAdapter(new CustomAdapter(this, deviceSensors));
-//        setListAdapter(new ArrayAdapter<Object>(this,android.R.layout.simple_list_item_checked,deviceSensorsO));
         checkedStates = new boolean[listview.getCount()];
+        index=new int[listview.getCount()];
 
         ////////////////////////////////////////////////////////////////////////////////////////
+        //Find the button in the view
         Button goButton = (Button) findViewById(R.id.goButton);
+        //create the click listener:
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //getItemId ou getItem?? for next, test with getItem first
                 for(int i =0; i < listview.getCount();i++){
-
+                    //for all element of the list, i get the checked ones (boolean true for the checkedStates)
                     if(checkedStates[i]==true){
-                        System.out.println("################"+listview.getItemAtPosition(i));
                         if(sensorSelected==null) {
                             sensorSelected = listview.getItemAtPosition(i).toString();
                         }
                         else {
                             sensorSelected = sensorSelected + "/" + listview.getItemAtPosition(i).toString();
-//                            sensorsList.add(deviceSensors.get(i));
-                            System.out.println("##################deviceSensors"+deviceSensors.get(i));
-//                            System.out.println(listview.getItemAtPosition(i));
+                            index[p]=i;
+                            p++;
                         }
                     }
                 }
-                SensorList sensorsPutExtra = new SensorList(sensorsList);
-                //################### TEST
-                // save the object to file
-                FileOutputStream fos = null;
-                ObjectOutputStream out = null;
-                try {
-                    fos = new FileOutputStream(sensorType);
-                    out = new ObjectOutputStream(fos);
-                    out.writeObject(sensorsPutExtra);
-
-                    out.close();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                //##################### END TEST
-//                System.out.println("########################"+sensorsList.get(0));
 
                 Intent intent = new Intent(MainActivity.this, SensorClickedActivity.class);
-                intent.putExtra("sensorType",sensorsPutExtra);
-//                intent.putExtra("sensors",sensorSelected);
-//                Bundle test =new Bundle().getBundle
-//                intent.putExtra("sensors",sensorForBundle);
-                /*////*//*
-                Here: sending the information about which sensor is selected
-                *//*////*/
-//                System.out.println("////////////////////////////////////////////////////"+index);
+                //putExtra the index of sensors to send the int[] to SensorClickedActivity.java
+                intent.putExtra("index",index);
                 startActivity(intent);
             }
         });
@@ -142,30 +122,17 @@ public class MainActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    //Change the Activity but doesn't get the sensor yet
-//    public void goSensorClicked() {
-//        Intent intent = new Intent(this, SensorClickedActivity.class);
-//        //could try to putExtra the sensor itself
-////        intent.putExtra(EXTRA_MESSAGE, sensorClicked.getName());
-    /////////////////////////////////////////////////////////////////// ##################
-//        intent.putExtra("sensorType", sensorClicked.getType());
-//        startActivity(intent);
-//    }
-
 
 ///////////////////////////////////////////////////////////////////////
 
 	public void onListItemClick(ListView parent, View v,int position,long id){
+        //CheckedTextView can be created in the view, not necessary now
+//		CheckedTextView item = (CheckedTextView) v;
+        checkedStates[position] = !checkedStates[position]; //checked are unchecked...
+//        Toast.makeText(this, sensorClicked.get(position)+ " checked : " + item.isChecked(), Toast.LENGTH_SHORT).show();
 
-		CheckedTextView item = (CheckedTextView) v;
-        checkedStates[position] = !checkedStates[position];
-        Toast.makeText(this, sensorClicked.get(position)+ " checked : " + item.isChecked(), Toast.LENGTH_SHORT).show();
-
-
-//        sensorSelected.add(sensorClicked.get(position));
 
 	}
-
 }
 
 

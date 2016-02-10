@@ -37,7 +37,7 @@ public class MainActivity extends ListActivity {
     private List<Sensor> sensorClicked;
     private ArrayList<Integer> index = new ArrayList<Integer>();
 
-    //    private List<Sensor> sensorSelected;
+//    private List<Sensor> sensorSelected;
 //    private String theSensorClicked;
 //    public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
     private boolean[] checkedStates;
@@ -78,6 +78,8 @@ public class MainActivity extends ListActivity {
 //                int p = 0;
 
                 for(int i =0; i < listview.getCount();i++){
+                    System.out.println("getcount :"+listview.getCount());
+                    System.out.println("getcount then i :"+i);
                     //for all element of the list, i get the checked ones (boolean true for the checkedStates)
                     if(checkedStates[i]==true){
 //                        if(sensorSelected==null) {
@@ -90,15 +92,17 @@ public class MainActivity extends ListActivity {
 //                            p++;
 //                        }
                         index.add(i);
+                        System.out.println("index size :"+index.size());
 //                        p++;
                     }
                 }
 
-                Intent intent = new Intent(MainActivity.this, SensorClickedActivity.class);
+                Intent intent = new Intent(MainActivity.this, MultipleSensorClickedActivity.class);
                 //putExtra the index of sensors to send the int[] to SensorClickedActivity.java
 //                intent.putExtra("index",index);
                 intent.putIntegerArrayListExtra("index",index);
                 startActivity(intent);
+                finish();
             }
         });
 

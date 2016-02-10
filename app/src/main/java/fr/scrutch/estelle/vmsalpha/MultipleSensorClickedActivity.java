@@ -3,30 +3,28 @@ package fr.scrutch.estelle.vmsalpha;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
+import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.hardware.SensorEvent;
-import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SensorClickedActivity extends AppCompatActivity implements SensorEventListener {
+/**
+ * Created by scrutch on 10/02/16.
+ */
+public class MultipleSensorClickedActivity extends AppCompatActivity {
 
     private int count = 0;
     private SensorManager aSensorManager;   //one sensormanager for all listeners
-//    private SensorManager bSensorManager;
+    //    private SensorManager bSensorManager;
     private Sensor aSensor;
     private long time1,time2,time3;
-//    private int[] index;
+    //    private int[] index;
     private SensorManager mSensorManager;   //don't touch that one
     private List<Sensor> sensorClicked;
     private ArrayList<Integer> index = new ArrayList<Integer>();
@@ -34,7 +32,7 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
     private SensorEventThread sensorThread; //TEST #################
     private ArrayList<Sensor> sensorsToListen = new ArrayList<Sensor>();
 
-    public SensorClickedActivity() {
+    public MultipleSensorClickedActivity() {
     }
 
     @Override
@@ -62,11 +60,12 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         //Create the list with the selected sensors:
         for(int i = 0; i < index.size(); i++) {
             sensorsToListen.add(sensorClicked.get(index.get(i)));
+            System.out.println(sensorsToListen.get(i));
         }
 
 
-		sensorThread = new SensorEventThread("SensorThread"); //TEST ###################
-
+        sensorThread = new SensorEventThread("SensorThread"); //TEST ###################
+        setListeners(sensorsToListen);
     }
 
     @Override
@@ -92,23 +91,6 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
     }
 
     @Override
-    public void onSensorChanged(SensorEvent event) {
-        if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER){
-        //TEST: the accelero works
-//            getAccelerometer(event);
-        }
-        //TEST: the magnetic
-        if(event.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD){
-//            getMagnetic(event);
-        }
-        getSensorType(event);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-    @Override
     protected void onResume() {
         super.onResume();
         // register this class as a listener for the orientation and
@@ -128,7 +110,7 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
         //TEST ############## next line
 //        aSensorManager.unregisterListener(this);
 
-		sensorThread.quitLooper();
+        sensorThread.quitLooper();
 //        bSensorManager.unregisterListener(this);
 
     }
@@ -219,6 +201,7 @@ public class SensorClickedActivity extends AppCompatActivity implements SensorEv
     public void setListeners(ArrayList<Sensor> sensors){
         for (Sensor s:sensors) {
             aSensorManager.registerListener(sensorThread,aSensorManager.getDefaultSensor(s.getType()), 0,sensorThread.getHandler());
+            System.out.println("COUCOU");
         }
     }
 

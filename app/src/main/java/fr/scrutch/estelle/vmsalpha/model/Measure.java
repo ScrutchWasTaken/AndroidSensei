@@ -9,12 +9,14 @@ package fr.scrutch.estelle.vmsalpha.model;
  *
  */
 public class Measure {
+    private long id;
     private String sensorName;
     private String campaignName;
     private long time;
     private long value1, value2, value3;
 
-    public Measure(String sensorName, String campaignName, long time, long value1, long value2, long value3) {
+    public Measure(long id, String sensorName, String campaignName, long time, long value1, long value2, long value3) {
+        this.id = id;
         this.sensorName = sensorName;
         this.campaignName = campaignName;
         this.time = time;
@@ -23,10 +25,19 @@ public class Measure {
         this.value3 = value3;
     }
 
-    public Measure(String sensorName, String campaignName, long time, long value1) {
+    public Measure(long id, String sensorName, String campaignName, long time, long value1) {
+        this.id = id;
         this.sensorName = sensorName;
         this.campaignName = campaignName;
         this.time = time;
         this.value1 = value1;
+    }
+
+    public String getSensorName() {
+        return sensorName;
+    }
+
+    public String getCampaignName() {
+        return campaignName;
     }
 }

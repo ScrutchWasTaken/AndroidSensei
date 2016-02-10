@@ -19,4 +19,8 @@ public class Campaign {
         this.sensor = sensor;
         this.isFav = isFav;
     }
+
+    public String getName() {
+        return name;
+    }
 }

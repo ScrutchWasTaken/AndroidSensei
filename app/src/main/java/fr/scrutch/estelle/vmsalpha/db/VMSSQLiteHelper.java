@@ -7,12 +7,13 @@ import android.util.Log;
 
 /**
  * Created by gael on 04/02/16.
+ * Contains the SQLite DB model
  */
 public class VMSSQLiteHelper extends SQLiteOpenHelper {
 
     /* SHARED */
-    private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "vms.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "vms.db";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_CAMPAIGNNAME = "campaign_name";
     public static final String COLUMN_SENSORNAME = "sensor_name";
@@ -59,17 +60,15 @@ public class VMSSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_ENDDATE + " long, "
             + COLUMN_FAV + " boolean);";
 
-
-
-
-
-    public VMSSQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public VMSSQLiteHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        //database.execSQL(DATABASE_CREATE);
+        database.execSQL(CREATE_CAMPAIGN_TABLE);
+        database.execSQL(CREATE_MEASURES_TABLE);
+        database.execSQL(CREATE_SENSORS_TABLE);
     }
 
     @Override
@@ -78,7 +77,10 @@ public class VMSSQLiteHelper extends SQLiteOpenHelper {
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEASURES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAMPAIGNS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SENSORS);
         onCreate(db);
     }
 
 }
+

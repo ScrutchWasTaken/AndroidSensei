@@ -82,24 +82,12 @@ public class MainActivity extends ListActivity {
                     System.out.println("getcount then i :"+i);
                     //for all element of the list, i get the checked ones (boolean true for the checkedStates)
                     if(checkedStates[i]==true){
-//                        if(sensorSelected==null) {
-//                            sensorSelected = listview.getItemAtPosition(i).toString();
-//                        }
-//                        else {
-//                            sensorSelected = sensorSelected + "/" + listview.getItemAtPosition(i).toString();
-//                            index[p]=i;
-//                            System.out.println("COUCOU  "+index[p]);
-//                            p++;
-//                        }
                         index.add(i);
-                        System.out.println("index size :"+index.size());
-//                        p++;
                     }
                 }
 
                 Intent intent = new Intent(MainActivity.this, MultipleSensorClickedActivity.class);
-                //putExtra the index of sensors to send the int[] to SensorClickedActivity.java
-//                intent.putExtra("index",index);
+                //putExtra the index of sensors to send the int[] to MultipleSensorClickedActivity.java
                 intent.putIntegerArrayListExtra("index",index);
                 startActivity(intent);
                 finish();

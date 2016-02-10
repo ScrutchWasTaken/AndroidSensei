@@ -5,7 +5,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.widget.TextView;
 
 /**
  * Created by scrutch on 10/02/16.

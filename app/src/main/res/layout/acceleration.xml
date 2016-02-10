@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.scrutch.estelle.vmsalpha.SensorClickedActivity"
+    tools:context="fr.scrutch.estelle.vmsalpha.MultipleSensorClickedActivity"
     android:orientation="vertical">
 
 
@@ -9,27 +9,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=" "
+        android:text="Listening sensors"
         android:id="@+id/textView" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=" "
-        android:id="@+id/textView2" />
+        android:text="Pause"
+        android:onClick="onClickPause"
+        android:id="@+id/button" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=" "
-        android:id="@+id/textView3" />
+        android:text="Replay"
+        android:onClick="onClickReplay"
+        android:id="@+id/button2" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=" "
-        android:id="@+id/textView4" />
+        android:text="Return to the list of sensors"
+        android:onClick="onClickList"
+        android:id="@+id/button3" />
+
+
 </LinearLayout>

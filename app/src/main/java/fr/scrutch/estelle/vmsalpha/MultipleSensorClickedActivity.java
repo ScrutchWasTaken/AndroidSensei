@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +86,8 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
     protected void onPause() {
         // unregister listener
         super.onPause();
+        unsetListeners(sensorsToListen);
         sensorThread.quitLooper();
-
     }
 
 
@@ -94,6 +95,24 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
         for (Sensor s:sensors) {
             aSensorManager.registerListener(sensorThread, aSensorManager.getDefaultSensor(s.getType()), 0,sensorThread.getHandler());
         }
+    }
+
+    public void unsetListeners(ArrayList<Sensor> sensors){
+        aSensorManager.unregisterListener(sensorThread);
+    }
+
+    public void onClickPause(View v){
+        onPause();
+    }
+
+    public void onClickReplay(View v){
+        onResume();
+    }
+
+    public void onClickList(View v){
+        Intent intent = new Intent(MultipleSensorClickedActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

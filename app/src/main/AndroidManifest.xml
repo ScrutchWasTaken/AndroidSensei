@@ -17,10 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SensorClickedActivity"
-            android:label="@string/title_activity_sensors_list" >
-        </activity>
-        <activity
             android:name=".MultipleSensorClickedActivity">
         </activity>
 

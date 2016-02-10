@@ -12,6 +12,10 @@ public class Sensor {
         this.name = name;
     }
 
+    public Sensor(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

@@ -7,15 +7,18 @@ import java.util.List;
  * Represent a measuring campaign to be saved in the DB
  */
 public class Campaign {
+    private long id;
     private String name;
     private long startDate;
     private long endDate;
     private Sensor sensor;
     private boolean isFav;
 
-    public Campaign(String name ,Sensor sensor, long startDate, boolean isFav) {
+    public Campaign(long id, String name, long startDate, long endDate, Sensor sensor, boolean isFav) {
+        this.id = id;
         this.name = name;
         this.startDate = startDate;
+        this.endDate = endDate;
         this.sensor = sensor;
         this.isFav = isFav;
     }

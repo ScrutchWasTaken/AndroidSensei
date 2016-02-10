@@ -30,18 +30,20 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.scrutch.estelle.vmsalpha.db.SensorsDAO;
+
+
 //Ici, c'est Scrutchy
 public class MainActivity extends ListActivity {
 
     private SensorManager mSensorManager;
     private List<Sensor> sensorClicked;
-    private ArrayList<Integer> index = new ArrayList<Integer>();
+    private ArrayList<Integer> index = new ArrayList<>();
 
-//    private List<Sensor> sensorSelected;
-//    private String theSensorClicked;
-//    public final static String EXTRA_MESSAGE = "fr.scrutch.estelle.vmsalpha.MESSAGE";
     private boolean[] checkedStates;
-    private String sensorSelected;
+
+    /** DB Stuffs **/
+    private SensorsDAO dao;
 
 
     @Override
@@ -52,21 +54,32 @@ public class MainActivity extends ListActivity {
         //Create the sensor manager to get the sensors'list
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-        //Create the list (cf http://www.androidinterview.com/android-custom-listview-with-checkbox-example/)
         final List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
         sensorClicked = deviceSensors;
-//        final ArrayList<Object> deviceSensorsO = new ArrayList<Object>();
-//        for (Sensor s:deviceSensors) {
-//            deviceSensorsO.add((Object) s);
-//        }
-//        final List<Object> deviceSensorsO = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+
+        /** DB STUFFS **/
+        dao = new SensorsDAO(this);
+        dao.open();
+        /* Adding sensors in the DB (_id, name)*/
+        for(int i=0 ; i < deviceSensors.size() ; i++) {
+            dao.createSensor(deviceSensors.get(i).getName());
+        }
+        System.out.println("Sensors put int the DB...");
+
+        ArrayList<fr.scrutch.estelle.vmsalpha.model.Sensor> tmp = dao.getAllSensors();
+        for(int i=0; i<tmp.size(); i++) {
+            System.out.println(tmp.get(i).getName());
+        }
+
+        /** END OF DB STUFFS **/
+
         final ListView listview = getListView();
         listview.setChoiceMode(listview.CHOICE_MODE_MULTIPLE);
         listview.setTextFilterEnabled(true);
         setListAdapter(new CustomAdapter(this, deviceSensors));
         checkedStates = new boolean[listview.getCount()];
 
-        ////////////////////////////////////////////////////////////////////////////////////////
+        /** **/
         //Find the button in the view
         Button goButton = (Button) findViewById(R.id.goButton);
 
@@ -74,9 +87,6 @@ public class MainActivity extends ListActivity {
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                index=new int[listview.getCount()];
-//                int p = 0;
-
                 for(int i =0; i < listview.getCount();i++){
                     System.out.println("getcount :"+listview.getCount());
                     System.out.println("getcount then i :"+i);
@@ -114,20 +124,13 @@ public class MainActivity extends ListActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
 
-///////////////////////////////////////////////////////////////////////
 
 	public void onListItemClick(ListView parent, View v,int position,long id){
-        //CheckedTextView can be created in the view, not necessary now
-//		CheckedTextView item = (CheckedTextView) v;
-        checkedStates[position] = !checkedStates[position]; //checked are unchecked...
-//        Toast.makeText(this, sensorClicked.get(position)+ " checked : " + item.isChecked(), Toast.LENGTH_SHORT).show();
-
-
+        checkedStates[position] = !checkedStates[position];
 	}
 }
 

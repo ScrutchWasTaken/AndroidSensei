@@ -12,7 +12,7 @@ import android.util.Log;
 public class VMSSQLiteHelper extends SQLiteOpenHelper {
 
     /* SHARED */
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "vms.db";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_CAMPAIGNNAME = "campaign_name";
@@ -39,7 +39,7 @@ public class VMSSQLiteHelper extends SQLiteOpenHelper {
     private static final String CREATE_SENSORS_TABLE = "create table "
             + TABLE_SENSORS + "("
             + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text not null);";
+            + COLUMN_NAME + " text unique not null);";
 
     private static final String CREATE_MEASURES_TABLE = "create table "
             + TABLE_MEASURES + "("

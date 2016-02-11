@@ -4,29 +4,16 @@ package fr.scrutch.estelle.vmsalpha;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +29,9 @@ public class MainActivity extends ListActivity {
 
     private boolean[] checkedStates;
 
-    /** DB Stuffs **/
+    /**
+     * DB Stuffs
+     **/
     private SensorsDAO dao;
 
 
@@ -60,14 +49,23 @@ public class MainActivity extends ListActivity {
         /** DB STUFFS **/
         dao = new SensorsDAO(this);
         dao.open();
-        /* Adding sensors in the DB (_id, name)*/
-        for(int i=0 ; i < deviceSensors.size() ; i++) {
-            dao.createSensor(deviceSensors.get(i).getName());
+
+            /* Adding sensors in the DB (_id, name)*/
+        for (int i = 0; i < deviceSensors.size(); i++) {
+            try {
+                dao.createSensor(deviceSensors.get(i).getName());
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println("Sensors put int the DB...");
 
+
         ArrayList<fr.scrutch.estelle.vmsalpha.model.Sensor> tmp = dao.getAllSensors();
-        for(int i=0; i<tmp.size(); i++) {
+        System.out.println("Table sensor dump :");
+        for (int i = 0; i < tmp.size(); i++) {
             System.out.println(tmp.get(i).getName());
         }
 
@@ -87,18 +85,18 @@ public class MainActivity extends ListActivity {
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i =0; i < listview.getCount();i++){
-                    System.out.println("getcount :"+listview.getCount());
-                    System.out.println("getcount then i :"+i);
+                for (int i = 0; i < listview.getCount(); i++) {
+                    System.out.println("getcount :" + listview.getCount());
+                    System.out.println("getcount then i :" + i);
                     //for all element of the list, i get the checked ones (boolean true for the checkedStates)
-                    if(checkedStates[i]==true){
+                    if (checkedStates[i] == true) {
                         index.add(i);
                     }
                 }
 
                 Intent intent = new Intent(MainActivity.this, MultipleSensorClickedActivity.class);
                 //putExtra the index of sensors to send the int[] to MultipleSensorClickedActivity.java
-                intent.putIntegerArrayListExtra("index",index);
+                intent.putIntegerArrayListExtra("index", index);
                 startActivity(intent);
                 finish();
             }
@@ -128,10 +126,9 @@ public class MainActivity extends ListActivity {
     }
 
 
-
-	public void onListItemClick(ListView parent, View v,int position,long id){
+    public void onListItemClick(ListView parent, View v, int position, long id) {
         checkedStates[position] = !checkedStates[position];
-	}
+    }
 }
 
 

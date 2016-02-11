@@ -18,4 +18,5 @@
     <string name="saveCampaign">Set Name</string>
     <string name="Historic">Historic</string>
     <string name="measures">Measures</string>
+    <string name="sensors">Sensors selected</string>
 </resources>

@@ -6,7 +6,7 @@
     <string name="title_activity_sensors_list">SensorsListActivity</string>
 
 
-    <string name="Go">Go</string>
+    <string name="Go">New Campaign</string>
     <string name="ShowValuesButton">Show Values</string>
     <string name="title_activity_activity_sensors_values">activity_sensors_values</string>
     <string name="title_activity_sensors_values">Sensors Values</string>
@@ -16,4 +16,5 @@
     <string name="stopRegistering">Stop measuring</string>
     <string name="returnList">Return to the list of sensors</string>
     <string name="saveCampaign">Save as favorite</string>
+    <string name="Historic">Historic</string>
 </resources>

@@ -81,7 +81,11 @@ public class MeasuresDAO {
     }
 
     /**
-     * Add measures in the DB 100 by 100
+     * Add measures in the DB 100 by 100 this is faster
+     * than adding the measure one by one.
+     * Principle : we prepare a request :
+     *      "insert into TABLE ( column1, col2, ...)
+     *      values ( , , ), ( , , )..."
      * @param measures
      */
     public void createMeasures(ArrayList<Measure> measures) {

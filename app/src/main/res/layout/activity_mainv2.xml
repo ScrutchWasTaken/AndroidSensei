@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -7,20 +7,26 @@
     tools:context="${packageName}.${activityClass}"
     android:id="@+id/get_sensors"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:gravity="bottom">
+    android:weightSum="1">
 
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/android:list"
-        android:layout_weight="1" />
+        android:layout_height="0dip"
+        android:layout_weight=".90">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/android:list"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="0dip"
+        android:layout_weight=".10"
+        android:gravity="bottom"
+        android:layout_alignParentBottom="true">
 
         <Button
             android:layout_width="180dp"
@@ -38,4 +44,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

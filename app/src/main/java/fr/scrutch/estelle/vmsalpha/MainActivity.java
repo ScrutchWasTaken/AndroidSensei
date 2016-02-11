@@ -63,8 +63,11 @@ public class MainActivity extends ListActivity {
         listview.setChoiceMode(listview.CHOICE_MODE_MULTIPLE);
         listview.setTextFilterEnabled(true);
         Button goButton = new Button(this);
+        Button histoButton = new Button(this);
         goButton.setText(R.string.Go);
+        histoButton.setText(R.string.Historic);
         listview.addFooterView(goButton);
+        listview.addFooterView(histoButton);
         setListAdapter(new CustomAdapter(this, deviceSensors));
         checkedStates = new boolean[listview.getCount()];
 
@@ -82,6 +85,15 @@ public class MainActivity extends ListActivity {
                 Intent intent = new Intent(MainActivity.this, MultipleSensorClickedActivity.class);
                 //putExtra the index of sensors to send the int[] to MultipleSensorClickedActivity.java
                 intent.putIntegerArrayListExtra("index", index);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        histoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HistoricActivity.class);
                 startActivity(intent);
                 finish();
             }

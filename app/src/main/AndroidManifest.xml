@@ -19,6 +19,9 @@
         <activity
             android:name=".MultipleSensorClickedActivity">
         </activity>
+        <activity
+            android:name=".HistoricActivity">
+        </activity>
 
     </application>
 

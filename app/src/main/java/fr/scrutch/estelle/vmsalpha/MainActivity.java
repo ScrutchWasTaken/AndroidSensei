@@ -1,6 +1,5 @@
 package fr.scrutch.estelle.vmsalpha;
 
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,19 +19,13 @@ import java.util.List;
 import fr.scrutch.estelle.vmsalpha.db.SensorsDAO;
 import fr.scrutch.estelle.vmsalpha.model.CustomAdapter;
 
-
-//Ici, c'est Scrutchy
 public class MainActivity extends ListActivity {
 
     private SensorManager mSensorManager;
-    private List<Sensor> sensorClicked;
     private ArrayList<Integer> index = new ArrayList<>();
 
     private boolean[] checkedStates;
 
-    /**
-     * DB Stuffs
-     **/
     private SensorsDAO dao;
 
 
@@ -45,13 +38,11 @@ public class MainActivity extends ListActivity {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         final List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-        sensorClicked = deviceSensors;
 
         /** DB STUFFS **/
         dao = new SensorsDAO(this);
         dao.open();
 
-            /* Adding sensors in the DB (_id, name)*/
         for (int i = 0; i < deviceSensors.size(); i++) {
             try {
                 dao.createSensor(deviceSensors.get(i).getName());
@@ -61,15 +52,11 @@ public class MainActivity extends ListActivity {
                 e.printStackTrace();
             }
         }
-        System.out.println("Sensors put int the DB...");
-
 
         ArrayList<fr.scrutch.estelle.vmsalpha.model.Sensor> tmp = dao.getAllSensors();
-        System.out.println("Table sensor dump :");
         for (int i = 0; i < tmp.size(); i++) {
             System.out.println(tmp.get(i).getName());
         }
-
         /** END OF DB STUFFS **/
 
         final ListView listview = getListView();
@@ -80,8 +67,6 @@ public class MainActivity extends ListActivity {
         listview.addFooterView(goButton);
         setListAdapter(new CustomAdapter(this, deviceSensors));
         checkedStates = new boolean[listview.getCount()];
-
-        /** **/
 
         //create the click listener:
         goButton.setOnClickListener(new View.OnClickListener() {
@@ -111,13 +96,16 @@ public class MainActivity extends ListActivity {
         return true;
     }
 
+    /**
+     * Handle action bar item clicks here. The action bar will
+     * automatically handle clicks on the Home/Up button, so long
+     * as you specify a parent activity in AndroidManifest.xml.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;

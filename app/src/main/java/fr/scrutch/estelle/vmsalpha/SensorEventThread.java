@@ -1,24 +1,41 @@
 package fr.scrutch.estelle.vmsalpha;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
 import android.os.HandlerThread;
 
+import java.util.ArrayList;
+
+import fr.scrutch.estelle.vmsalpha.db.MeasuresDAO;
+import fr.scrutch.estelle.vmsalpha.model.Measure;
+
 /**
  * Created by scrutch on 10/02/16.
  */
 public class SensorEventThread extends HandlerThread implements SensorEventListener {
 
-    Handler handler;
+    private Handler handler;
+    private ArrayList<Measure> measures;
+    private String campaignName ;
+    private MeasuresDAO dao;
+    private Sensor currentSensor;
+    private String sensorName;
 
-    public SensorEventThread(String name) {
+    public SensorEventThread(String name, String campaignName, Context context) {
         super(name);
+        this.campaignName=campaignName;
+        dao = new MeasuresDAO(context);
+        measures = new ArrayList<>();
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        currentSensor = event.sensor;
+        sensorName = currentSensor.getName();
+
         if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
             getLinearAcceleration(event);
         } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
@@ -60,8 +77,16 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
 
     public void quitLooper() {
         if (this.isAlive()) {
+
             this.getLooper().quit();
         }
+        /** Saving in the DB **/
+        dao.open();
+        System.out.println("Starting adding measures in the DB...");
+        for(int i=0; i<measures.size();i++) {
+            dao.createMeasure(measures.get(i));
+        }
+        System.out.println("Added " + measures.size() + " measures to the DB.");
     }
 
     private void getAccelerometer(SensorEvent event) {
@@ -71,7 +96,7 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
         float x = values[0];
         float y = values[1];
         float z = values[2];
-        System.out.println("Accelerometer" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x, y, z));
     }
 
     private void getGravity(SensorEvent event){
@@ -79,7 +104,7 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
         float x = values[0];
         float y = values[1];
         float z = values[2];
-        System.out.println("Gravity" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x, y, z));
     }
 
     private void getGyroscope(SensorEvent event){
@@ -87,7 +112,7 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
         float x = values[0];
         float y = values[1];
         float z = values[2];
-        System.out.println("Gyroscope" + "\n" + "x:" + x + " rad/s" + "\n" + "y:" + y + " rad/s" + "\n" + "z:" + z + " rad/s");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x, y, z));
     }
 
     private void getMagnetic(SensorEvent event) {
@@ -96,7 +121,7 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
         float x = values[0];
         float y = values[1];
         float z = values[2];
-        System.out.println("Ambiant magnetic field : " + x + " µT" +"\n"+ y + " µT" +"\n"+ z + " µT");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x, y, z));
     }
 
     private void getLinearAcceleration(SensorEvent event){
@@ -104,37 +129,37 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
         float x = values[0];
         float y = values[1];
         float z = values[2];
-        System.out.println("Linear Acceleration" + "\n" + "x:" + x + " m.s²" + "\n" + "y:" + y + " m.s²" + "\n" + "z:" + z + " m.s²");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x, y, z));
     }
 
     private void getLight(SensorEvent event){
         float[] values = event.values;
         float x = values[0];
-        System.out.println("Light" + "\n" + "x:" + x + " lx");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x));
     }
 
     private void getPressure(SensorEvent event){
         float[] values = event.values;
         float x = values[0];
-        System.out.println("Pressure" + "\n" + "x:" + x + " hPa");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x));
     }
 
     private void getProximity(SensorEvent event){
         float[] values = event.values;
         float x = values[0];
-        System.out.println("Proximity" + "\n" + "x:" + x + " cm");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x));
     }
 
     private void getRelativeHumidity(SensorEvent event){
         float[] values = event.values;
         float x = values[0];
-        System.out.println("Relative Humidity" + "\n" + "x:" + x + " %");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x));
     }
 
     private void getTemperature(SensorEvent event){
         float[] values = event.values;
         float x = values[0];
-        System.out.println("Temperature" + "\n" + "x:" + x + " °C = " + (x+273.15) + " K");
+        measures.add(new Measure(sensorName, campaignName, System.currentTimeMillis(), x));
     }
 
 }

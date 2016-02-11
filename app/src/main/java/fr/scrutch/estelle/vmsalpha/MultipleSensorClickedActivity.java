@@ -50,7 +50,7 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
             sensorsToListen.add(sensorClicked.get(index.get(i)));
         }
 
-        sensorThread = new SensorEventThread("SensorThread"); //TEST ###################
+        sensorThread = new SensorEventThread("SensorThread", "Campaign", this); //TEST ###################
 //        setListeners(sensorsToListen);
     }
 

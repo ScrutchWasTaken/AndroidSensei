@@ -21,7 +21,7 @@ public class MeasuresDAO {
     private SQLiteDatabase db;
     private String[] allColumns = {
       VMSSQLiteHelper.COLUMN_ID,
-            VMSSQLiteHelper.COLUMN_NAME,
+            VMSSQLiteHelper.COLUMN_SENSORNAME,
             VMSSQLiteHelper.COLUMN_CAMPAIGNNAME,
             VMSSQLiteHelper.COLUMN_TIME,
             VMSSQLiteHelper.COLUMN_VALUE1,
@@ -41,9 +41,33 @@ public class MeasuresDAO {
         dbHelper.close();
     }
 
-    public Measure createMeasure(String name) {
+    public Measure createMeasure(String sensorName, String campaignName, long time, float v1, float v2, float v3) {
         ContentValues values = new ContentValues();
-        values.put(VMSSQLiteHelper.COLUMN_NAME, name);
+        values.put(VMSSQLiteHelper.COLUMN_SENSORNAME, sensorName);
+        values.put(VMSSQLiteHelper.COLUMN_CAMPAIGNNAME, campaignName);
+        values.put(VMSSQLiteHelper.COLUMN_TIME, time);
+        values.put(VMSSQLiteHelper.COLUMN_VALUE1, v1);
+        values.put(VMSSQLiteHelper.COLUMN_VALUE2, v2);
+        values.put(VMSSQLiteHelper.COLUMN_VALUE3, v3);
+
+        long insertId = db.insert(VMSSQLiteHelper.TABLE_MEASURES, null, values);
+
+        Cursor cursor = db.query(VMSSQLiteHelper.TABLE_MEASURES, allColumns, VMSSQLiteHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
+        cursor.moveToFirst();
+
+        Measure newMeasure = cursorToMeasure(cursor);
+        cursor.close();
+        return newMeasure;
+    }
+
+    public Measure createMeasure(Measure measure) {
+        ContentValues values = new ContentValues();
+        values.put(VMSSQLiteHelper.COLUMN_SENSORNAME, measure.getSensorName());
+        values.put(VMSSQLiteHelper.COLUMN_CAMPAIGNNAME, measure.getCampaignName());
+        values.put(VMSSQLiteHelper.COLUMN_TIME, measure.getTime());
+        values.put(VMSSQLiteHelper.COLUMN_VALUE1, measure.getValue1());
+        values.put(VMSSQLiteHelper.COLUMN_VALUE2, measure.getValue2());
+        values.put(VMSSQLiteHelper.COLUMN_VALUE3, measure.getValue3());
 
         long insertId = db.insert(VMSSQLiteHelper.TABLE_MEASURES, null, values);
 
@@ -124,13 +148,13 @@ public class MeasuresDAO {
     }
 
     private Measure cursorToMeasure(Cursor cursor) {
-        Measure s = new Measure(cursor.getLong(0),  //id
+        Measure s = new Measure(cursor.getInt(0),  //id
                 cursor.getString(1),                //name
                 cursor.getString(2),                //campain Name
                 cursor.getLong(3),                  //time
-                cursor.getLong(4),                  //value 1
-                cursor.getLong(5),                  //value 2
-                cursor.getLong(6)                   //value 3
+                cursor.getFloat(4),                  //value 1
+                cursor.getFloat(5),                  //value 2
+                cursor.getFloat(6)                   //value 3
                 );
         return s;
     }

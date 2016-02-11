@@ -175,7 +175,7 @@ public class MeasuresDAO {
         return Measures;
     }
 
-    public ArrayList<Measure> getMeasuresForCampaign(Campaign campaign) {
+    public ArrayList<Measure> getMeasuresForCampaign(String campaignName) {
         ArrayList<Measure> measures = new ArrayList<>();
 
         Cursor cursor = db.query(VMSSQLiteHelper.TABLE_MEASURES, allColumns, null, null, null, null, null);
@@ -183,7 +183,7 @@ public class MeasuresDAO {
 
         while (!cursor.isAfterLast()) {
             Measure measure = cursorToMeasure(cursor);
-            if(measure.getCampaignName().equals(campaign.getName())) {
+            if(measure.getCampaignName().equals(campaignName)) {
                 measures.add(measure);
             }
             cursor.moveToNext();

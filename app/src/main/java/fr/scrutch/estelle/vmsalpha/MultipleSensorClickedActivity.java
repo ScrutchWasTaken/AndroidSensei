@@ -60,11 +60,9 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
 
         campaign = (EditText) findViewById(R.id.editTextView);
 
-        if(campaignName!=null) {
-            sensorThread = new SensorEventThread("SensorThread", campaignName, this);
-        } else {
-            Toast.makeText(this, "Set first please", Toast.LENGTH_LONG);
-        }
+
+        sensorThread = new SensorEventThread("SensorThread", campaignName, this);
+
 
 //        setListeners(sensorsToListen);
     }
@@ -97,6 +95,8 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
         if(first==true) {
             first = false;
         } else {
+            if(campaignName!=null)
+                sensorThread = new SensorEventThread("SensorThread", campaignName, this);
             setListeners(sensorsToListen);
         }
     }

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
     private SensorEventThread sensorThread; //TEST #################
     private ArrayList<Sensor> sensorsToListen = new ArrayList<Sensor>();
     private boolean first = true;
+    private EditText campaign;
     private  String campaignName;
 
     public MultipleSensorClickedActivity() {
@@ -54,7 +56,7 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
             tv.setText(tv.getText()+sensorClicked.get(index.get(i)).getName()+"\n");
         }
 
-
+        campaign = (EditText) findViewById(R.id.editTextView);
 
         sensorThread = new SensorEventThread("SensorThread", "Campaign", this); //TEST ###################
 //        setListeners(sensorsToListen);
@@ -126,6 +128,9 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
     }
 
     public void onClickFavorite(View v){
+        campaignName = campaign.getText().toString();
+        //le nom à mettre est campaignName ;)
+        System.out.println(campaignName);
         //Gael stp ='(
         //@TODO Ajout de la liste sensorsToListen comme campagne de mesure (c'est une arraylist de capteurs)
 

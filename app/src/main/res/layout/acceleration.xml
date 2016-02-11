@@ -9,11 +9,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/CampaignName"
-            android:id="@+id/textView" />
+            android:hint="@string/CampaignName"
+            android:id="@+id/editTextView" />
 
         <Button
             android:layout_width="wrap_content"

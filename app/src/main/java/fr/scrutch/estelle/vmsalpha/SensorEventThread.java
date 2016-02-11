@@ -82,7 +82,7 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
         }
         /** Saving in the DB **/
         dao.open();
-        System.out.println("Starting adding" + measures.size() + "measures in the DB..." );
+        System.out.println("Starting adding " + measures.size() + " measures in the DB..." );
         for(int i=0; i<measures.size();i++) {
             dao.createMeasure(measures.get(i));
         }

@@ -33,13 +33,12 @@ public class VMSSQLiteHelper extends SQLiteOpenHelper {
 
     /* TABLE SENSORS */
     public static final String TABLE_SENSORS = "sensors";
-    public static final String COLUMN_NAME = "name";
 
     /* TABLES CREATION */
     private static final String CREATE_SENSORS_TABLE = "create table "
             + TABLE_SENSORS + "("
             + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text unique not null);";
+            + COLUMN_SENSORNAME + " text unique not null);";
 
     private static final String CREATE_MEASURES_TABLE = "create table "
             + TABLE_MEASURES + "("

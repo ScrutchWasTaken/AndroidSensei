@@ -11,17 +11,19 @@ public class Campaign {
     private String name;
     private long startDate;
     private long endDate;
-    private Sensor sensor;
+    private String sensorName;
     private boolean isFav;
 
-    public Campaign(long id, String name, long startDate, long endDate, Sensor sensor, boolean isFav) {
+    public Campaign(long id, String name, long startDate, long endDate, String sensorName, boolean isFav) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.sensor = sensor;
+        this.sensorName = sensorName;
         this.isFav = isFav;
     }
+
+
 
     public String getName() {
         return name;

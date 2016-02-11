@@ -21,7 +21,7 @@ public class CampaignsDAO {
     private SQLiteDatabase db;
     private String[] allColumns = {
       VMSSQLiteHelper.COLUMN_ID,
-            VMSSQLiteHelper.COLUMN_NAME,
+            VMSSQLiteHelper.COLUMN_CAMPAIGNNAME,
             VMSSQLiteHelper.COLUMN_STARTDATE,
             VMSSQLiteHelper.COLUMN_ENDDATE,
             VMSSQLiteHelper.COLUMN_SENSORNAME,
@@ -40,9 +40,13 @@ public class CampaignsDAO {
         dbHelper.close();
     }
 
-    public Campaign createCampaign(String name) {
+    public Campaign createCampaign(String name, long startDate, long endDate, String sensorName, boolean isFav) {
         ContentValues values = new ContentValues();
-        values.put(VMSSQLiteHelper.COLUMN_NAME, name);
+        values.put(VMSSQLiteHelper.COLUMN_CAMPAIGNNAME, name);
+        values.put(VMSSQLiteHelper.COLUMN_STARTDATE, startDate);
+        values.put(VMSSQLiteHelper.COLUMN_ENDDATE, endDate);
+        values.put(VMSSQLiteHelper.COLUMN_SENSORNAME, sensorName);
+        values.put(VMSSQLiteHelper.COLUMN_FAV, isFav);
 
         long insertId = db.insert(VMSSQLiteHelper.TABLE_CAMPAIGNS, null, values);
 
@@ -74,7 +78,7 @@ public class CampaignsDAO {
                 cursor.getString(1),                    //name
                 cursor.getLong(2),                      //startDate
                 cursor.getLong(3),                      //endDate
-                new Sensor(cursor.getString(4)),        //sensor
+                cursor.getString(4),                    //sensor
                 Boolean.getBoolean(cursor.getString(5)) //fav
                 );
         return s;

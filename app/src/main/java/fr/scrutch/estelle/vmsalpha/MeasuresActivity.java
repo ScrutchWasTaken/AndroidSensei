@@ -30,11 +30,10 @@ public class MeasuresActivity extends AppCompatActivity {
         //@TODO aller chercher les mesures correspondant au nom de la campagne
         MeasuresDAO dao = new MeasuresDAO(this);
         dao.open();
-        ArrayList<Measure> measures = dao.getMeasuresForCampaign(campaignName);
+        ArrayList<Measure> measures = dao.getMeasuresForCampaign(campaignName); //campaignName
         dao.close();
 
-        System.out.println("Mesures : " + measures);
-        System.out.println("0"+measures.get(0)+"1"+measures.get(1));
+        System.out.println("Measures size : " + measures.size());
 
         ListView listview = (ListView) findViewById(R.id.listView);
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,measures);

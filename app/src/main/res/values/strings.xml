@@ -15,7 +15,7 @@
     <string name="startRegistering">Start measuring</string>
     <string name="stopRegistering">Stop measuring</string>
     <string name="returnList">Return to the list of sensors</string>
-    <string name="saveCampaign">Save as favorite</string>
+    <string name="saveCampaign">Set Name</string>
     <string name="Historic">Historic</string>
     <string name="measures">Measures</string>
 </resources>

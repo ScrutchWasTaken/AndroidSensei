@@ -11,6 +11,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import fr.scrutch.estelle.vmsalpha.db.CampaignsDAO;
+import fr.scrutch.estelle.vmsalpha.model.Campaign;
+
 /**
  * Created by scrutch on 11/02/16.
  */
@@ -36,10 +39,12 @@ public class HistoricActivity extends ListActivity {
 
     }
 
-
-    //Gael, je te laisse aller chercher la liste des noms de campagnes
-    //@TODO get campaign name in the database
     public ArrayList<String> getCampaignName() {
+        CampaignsDAO dao = new CampaignsDAO(this);
+        ArrayList<Campaign> campaigns = dao.getAllCampaigns();
+        for(int i=0;i<campaigns.size();i++) {
+            campaignName.add(campaigns.get(i).getName());
+        }
         return campaignName;
     }
 

@@ -22,6 +22,9 @@
         <activity
             android:name=".HistoricActivity">
         </activity>
+        <activity
+            android:name=".MeasuresActivity">
+        </activity>
 
     </application>
 

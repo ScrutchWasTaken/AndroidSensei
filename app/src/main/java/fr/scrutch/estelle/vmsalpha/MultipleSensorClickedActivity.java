@@ -135,12 +135,12 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
     }
 
     public void onClickFavorite(View v){
-        /*campaignName = campaign.getText().toString();
+        campaignName = campaign.getText().toString();
         //le nom à mettre est campaignName ;)
         System.out.println(campaignName);
 
         /** SAVING THE CAMPAIGN IN THE DB **/
-        /*CampaignsDAO dao = new CampaignsDAO(this);
+        CampaignsDAO dao = new CampaignsDAO(this);
         dao.open();
 
         //@TODO Handle the case when the Canpaign allready exist
@@ -149,7 +149,7 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "Saved in the DB", Toast.LENGTH_LONG).show();
 
-        dao.close();*/
+        dao.close();
         campaignName = campaign.getText().toString();
 
 

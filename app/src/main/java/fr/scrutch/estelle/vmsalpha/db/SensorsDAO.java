@@ -20,7 +20,7 @@ public class SensorsDAO {
     private SQLiteDatabase db;
     private String[] allColumns = {
       VMSSQLiteHelper.COLUMN_ID,
-            VMSSQLiteHelper.COLUMN_NAME
+            VMSSQLiteHelper.COLUMN_SENSORNAME
     };
 
     public SensorsDAO(Context context) {
@@ -37,7 +37,7 @@ public class SensorsDAO {
 
     public Sensor createSensor(String name) {
         ContentValues values = new ContentValues();
-        values.put(VMSSQLiteHelper.COLUMN_NAME, name);
+        values.put(VMSSQLiteHelper.COLUMN_SENSORNAME, name);
 
         long insertId = db.insert(VMSSQLiteHelper.TABLE_SENSORS, null, values);
 

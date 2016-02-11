@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.scrutch.estelle.vmsalpha.db.SensorsDAO;
+import fr.scrutch.estelle.vmsalpha.model.CustomAdapter;
 
 
 //Ici, c'est Scrutchy

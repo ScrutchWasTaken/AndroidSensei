@@ -90,11 +90,10 @@ public class MeasuresDAO {
         int size = measures.size();
         int bcl = size/100;
         int left = size%100;
-
+        System.out.println("Adding " + size + " measures...");
         for(int i=0; i<bcl+1 ; i++) {
             if(i!=bcl) {
                 /** Normal boucle complete ones * Begin of the request **/
-                System.out.println("Adding 100 measures...");
                 request.append("insert into " + VMSSQLiteHelper.TABLE_MEASURES);
                 request.append(" (" + VMSSQLiteHelper.COLUMN_SENSORNAME + ", "
                 + VMSSQLiteHelper.COLUMN_CAMPAIGNNAME + ", "
@@ -125,7 +124,6 @@ public class MeasuresDAO {
                 /** Last boucle the non complete one **/
                 /** Normal boucle complete ones
                  * Begin of the request **/
-                System.out.println("Adding " + left + " measures...");
                 request.append("insert into " + VMSSQLiteHelper.TABLE_MEASURES);
                 request.append(" (" + VMSSQLiteHelper.COLUMN_SENSORNAME + ", "
                         + VMSSQLiteHelper.COLUMN_CAMPAIGNNAME + ", "
@@ -153,6 +151,7 @@ public class MeasuresDAO {
                 request.append(m.getValue3() + ") ");
             }
         }
+        System.out.println("Finished to add the " + size + " measures...");
     }
 
     public ArrayList<Measure> getAllMeasures() {

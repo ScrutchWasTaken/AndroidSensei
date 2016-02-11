@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -84,12 +85,12 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
         dao.open();
         System.out.println("Starting adding " + measures.size() + " measures in the DB..." );
 
-        /** NON OPTIMISED METHODE
+        /* NON OPTIMISED METHODE
         for(int i=0; i<measures.size();i++) {
             dao.createMeasure(measures.get(i));
-        } **/
+        } */
 
-        /** OPTIMISED METHODE **/
+        /** OPTIMISED METHODE :-D **/
         dao.createMeasures(measures);
         measures.clear();
         System.out.println("Added " + measures.size() + " measures to the DB.");

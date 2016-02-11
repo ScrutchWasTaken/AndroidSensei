@@ -3,7 +3,6 @@ package fr.scrutch.estelle.vmsalpha;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +37,7 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.acceleration);
+        this.setContentView(R.layout.multiple_sensors);
         //mSensorManager is just for the list of sensors, no other use
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);  //get the list of sensors
         sensorClicked = mSensorManager.getSensorList(Sensor.TYPE_ALL);

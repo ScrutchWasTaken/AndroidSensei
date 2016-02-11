@@ -1,4 +1,4 @@
-package fr.scrutch.estelle.vmsalpha;
+package fr.scrutch.estelle.vmsalpha.model;
 
 import android.content.Context;
 import android.content.Intent;

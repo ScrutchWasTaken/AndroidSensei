@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import fr.scrutch.estelle.vmsalpha.model.Campaign;
@@ -77,6 +78,81 @@ public class MeasuresDAO {
         Measure newMeasure = cursorToMeasure(cursor);
         cursor.close();
         return newMeasure;
+    }
+
+    /**
+     * Add measures in the DB 100 by 100
+     * @param measures
+     */
+    public void createMeasures(ArrayList<Measure> measures) {
+        StringBuffer request = new StringBuffer();
+
+        int size = measures.size();
+        int bcl = size/100;
+        int left = size%100;
+
+        for(int i=0; i<bcl+1 ; i++) {
+            if(i!=bcl) {
+                /** Normal boucle complete ones * Begin of the request **/
+                System.out.println("Adding 100 measures...");
+                request.append("insert into " + VMSSQLiteHelper.TABLE_MEASURES);
+                request.append(" (" + VMSSQLiteHelper.COLUMN_SENSORNAME + ", "
+                + VMSSQLiteHelper.COLUMN_CAMPAIGNNAME + ", "
+                + VMSSQLiteHelper.COLUMN_TIME + ", "
+                + VMSSQLiteHelper.COLUMN_VALUE1 + ", "
+                + VMSSQLiteHelper.COLUMN_VALUE2 + ", "
+                + VMSSQLiteHelper.COLUMN_VALUE3 + ") values ");
+
+                /** VALUES of the request **/
+                for(int j=0 ; j<99; j++) {
+                    Measure m = measures.get((i+1)*j);
+                    request.append("(" + m.getSensorName() + ", ");
+                    request.append(m.getCampaignName() + ", ");
+                    request.append(m.getTime() + ", ");
+                    request.append(m.getValue1() + ", ");
+                    request.append(m.getValue2() + ", ");
+                    request.append(m.getValue3() + "), ");
+                }
+                /** Conclusion of the request **/
+                Measure m = measures.get((i+1)*100);
+                request.append("(" + m.getSensorName() + ", ");
+                request.append(m.getCampaignName() + ", ");
+                request.append(m.getTime() + ", ");
+                request.append(m.getValue1() + ", ");
+                request.append(m.getValue2() + ", ");
+                request.append(m.getValue3() + ") ");
+            } else {
+                /** Last boucle the non complete one **/
+                /** Normal boucle complete ones
+                 * Begin of the request **/
+                System.out.println("Adding " + left + " measures...");
+                request.append("insert into " + VMSSQLiteHelper.TABLE_MEASURES);
+                request.append(" (" + VMSSQLiteHelper.COLUMN_SENSORNAME + ", "
+                        + VMSSQLiteHelper.COLUMN_CAMPAIGNNAME + ", "
+                        + VMSSQLiteHelper.COLUMN_TIME + ", "
+                        + VMSSQLiteHelper.COLUMN_VALUE1 + ", "
+                        + VMSSQLiteHelper.COLUMN_VALUE2 + ", "
+                        + VMSSQLiteHelper.COLUMN_VALUE3 + ") values ");
+                /** VALUES of the request for the last VALUES **/
+                for(int j=0 ; j<left-1; j++) {
+                    Measure m = measures.get((bcl*100)+ j );
+                    request.append("(" + m.getSensorName() + ", ");
+                    request.append(m.getCampaignName() + ", ");
+                    request.append(m.getTime() + ", ");
+                    request.append(m.getValue1() + ", ");
+                    request.append(m.getValue2() + ", ");
+                    request.append(m.getValue3() + "), ");
+                }
+                /** Conclusion of the request **/
+                Measure m = measures.get(size-1);
+                request.append("(" + m.getSensorName() + ", ");
+                request.append(m.getCampaignName() + ", ");
+                request.append(m.getTime() + ", ");
+                request.append(m.getValue1() + ", ");
+                request.append(m.getValue2() + ", ");
+                request.append(m.getValue3() + ") ");
+            }
+        }
     }
 
     public ArrayList<Measure> getAllMeasures() {

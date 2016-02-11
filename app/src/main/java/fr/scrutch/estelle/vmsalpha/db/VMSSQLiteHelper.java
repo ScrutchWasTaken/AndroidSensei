@@ -12,7 +12,7 @@ import android.util.Log;
 public class VMSSQLiteHelper extends SQLiteOpenHelper {
 
     /* SHARED */
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "vms.db";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_CAMPAIGNNAME = "campaign_name";

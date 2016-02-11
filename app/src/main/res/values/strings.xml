@@ -17,4 +17,5 @@
     <string name="returnList">Return to the list of sensors</string>
     <string name="saveCampaign">Save as favorite</string>
     <string name="Historic">Historic</string>
+    <string name="measures">Measures</string>
 </resources>

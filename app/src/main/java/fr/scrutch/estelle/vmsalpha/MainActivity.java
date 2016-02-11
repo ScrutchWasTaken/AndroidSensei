@@ -42,17 +42,21 @@ public class MainActivity extends ListActivity {
         /** DB STUFFS **/
         dao = new SensorsDAO(this);
         dao.open();
+        ArrayList<fr.scrutch.estelle.vmsalpha.model.Sensor> sensorsInDB = dao.getAllSensors();
+        if(sensorsInDB.size()==0) {
+            for (int i = 0; i < deviceSensors.size(); i++) {
 
-        for (int i = 0; i < deviceSensors.size(); i++) {
-            try {
-                dao.createSensor(deviceSensors.get(i).getName());
-            } catch (SQLiteConstraintException e) {
-                e.printStackTrace();
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
+                try {
+                    dao.createSensor(deviceSensors.get(i).getName());
+                } catch (SQLiteConstraintException e) {
+                    e.printStackTrace();
+                } catch (IndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
             }
         }
         dao.close();
+
         /** END OF DB STUFFS **/
 
         final ListView listview = getListView();

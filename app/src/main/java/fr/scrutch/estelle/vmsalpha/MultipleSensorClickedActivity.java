@@ -11,9 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.scrutch.estelle.vmsalpha.db.CampaignsDAO;
 
 /**
  * Created by scrutch on 10/02/16.
@@ -29,7 +32,7 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
     private ArrayList<Sensor> sensorsToListen = new ArrayList<Sensor>();
     private boolean first = true;
     private EditText campaign;
-    private  String campaignName;
+    private String campaignName;
 
     public MultipleSensorClickedActivity() {
     }
@@ -130,8 +133,22 @@ public class MultipleSensorClickedActivity extends AppCompatActivity {
         campaignName = campaign.getText().toString();
         //le nom à mettre est campaignName ;)
         System.out.println(campaignName);
-        //Gael stp ='(
-        //@TODO Ajout de la liste sensorsToListen comme campagne de mesure (c'est une arraylist de capteurs)
+
+        /** SAVING THE CAMPAIGN IN THE DB **/
+        CampaignsDAO dao = new CampaignsDAO(this);
+        dao.open();
+
+        //@TODO Handle the case when the Canpaign allready exist
+        for(int i=0 ; i<sensorsToListen.size() ; i++) {
+            dao.createCampaign(campaignName, System.currentTimeMillis(), sensorsToListen.get(i).getName(), true);
+        }
+        Toast.makeText(this, "Saved in the DB", Toast.LENGTH_LONG).show();
+
+        dao.close();
+
+
+
+
 
     }
 

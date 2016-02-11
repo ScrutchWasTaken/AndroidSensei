@@ -58,6 +58,23 @@ public class CampaignsDAO {
         return newCampaign;
     }
 
+    public Campaign createCampaign(String name, long startDate, String sensorName, boolean isFav) {
+        ContentValues values = new ContentValues();
+        values.put(VMSSQLiteHelper.COLUMN_CAMPAIGNNAME, name);
+        values.put(VMSSQLiteHelper.COLUMN_STARTDATE, startDate);
+        values.put(VMSSQLiteHelper.COLUMN_SENSORNAME, sensorName);
+        values.put(VMSSQLiteHelper.COLUMN_FAV, isFav);
+
+        long insertId = db.insert(VMSSQLiteHelper.TABLE_CAMPAIGNS, null, values);
+
+        Cursor cursor = db.query(VMSSQLiteHelper.TABLE_CAMPAIGNS, allColumns, VMSSQLiteHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
+        cursor.moveToFirst();
+
+        Campaign newCampaign = cursorToCampaign(cursor);
+        cursor.close();
+        return newCampaign;
+    }
+
     public ArrayList<Campaign> getAllCampaigns() {
         ArrayList<Campaign> Campaigns = new ArrayList<>();
 

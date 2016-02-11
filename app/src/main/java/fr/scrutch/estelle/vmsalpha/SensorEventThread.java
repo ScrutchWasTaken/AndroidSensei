@@ -91,8 +91,7 @@ public class SensorEventThread extends HandlerThread implements SensorEventListe
 
         /** OPTIMISED METHODE **/
         dao.createMeasures(measures);
-
-
+        measures.clear();
         System.out.println("Added " + measures.size() + " measures to the DB.");
         dao.close();
     }

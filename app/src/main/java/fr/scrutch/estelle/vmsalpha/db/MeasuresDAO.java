@@ -88,12 +88,15 @@ public class MeasuresDAO {
         StringBuffer request = new StringBuffer();
 
         int size = measures.size();
+        if(size==0) {
+            return;
+        }
         int bcl = size/100;
         int left = size%100;
         System.out.println("Adding " + size + " measures...");
         for(int i=0; i<bcl+1 ; i++) {
             if(i!=bcl) {
-                /** Normal boucle complete ones * Begin of the request **/
+                /** Normal loop * Begin of the request **/
                 request.append("insert into " + VMSSQLiteHelper.TABLE_MEASURES);
                 request.append(" (" + VMSSQLiteHelper.COLUMN_SENSORNAME + ", "
                 + VMSSQLiteHelper.COLUMN_CAMPAIGNNAME + ", "
@@ -121,8 +124,7 @@ public class MeasuresDAO {
                 request.append(m.getValue2() + ", ");
                 request.append(m.getValue3() + ") ");
             } else {
-                /** Last boucle the non complete one **/
-                /** Normal boucle complete ones
+                /** Normal loop complete ones
                  * Begin of the request **/
                 request.append("insert into " + VMSSQLiteHelper.TABLE_MEASURES);
                 request.append(" (" + VMSSQLiteHelper.COLUMN_SENSORNAME + ", "

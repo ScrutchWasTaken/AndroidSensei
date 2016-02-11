@@ -39,7 +39,7 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_2);
+        setContentView(R.layout.activity_main);
 
         //Create the sensor manager to get the sensors'list
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -82,16 +82,12 @@ public class MainActivity extends ListActivity {
         checkedStates = new boolean[listview.getCount()];
 
         /** **/
-        //Find the button in the view
-//        Button goButton = (Button) findViewById(R.id.goButton);
 
         //create the click listener:
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < listview.getCount(); i++) {
-                    System.out.println("getcount :" + listview.getCount());
-                    System.out.println("getcount then i :" + i);
                     //for all element of the list, i get the checked ones (boolean true for the checkedStates)
                     if (checkedStates[i] == true) {
                         index.add(i);

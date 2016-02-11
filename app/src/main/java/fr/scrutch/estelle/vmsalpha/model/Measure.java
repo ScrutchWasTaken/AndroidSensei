@@ -64,4 +64,13 @@ public class Measure {
     public String getCampaignName() {
         return campaignName;
     }
+
+    @Override
+    public String toString() {
+        return sensorName + " " + campaignName +
+                ", time=" + time +
+                ", v1=" + value1 +
+                ", v2=" + value2 +
+                ", v3=" + value3;
+    }
 }

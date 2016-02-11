@@ -39,7 +39,7 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_2);
 
         //Create the sensor manager to get the sensors'list
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -75,12 +75,15 @@ public class MainActivity extends ListActivity {
         final ListView listview = getListView();
         listview.setChoiceMode(listview.CHOICE_MODE_MULTIPLE);
         listview.setTextFilterEnabled(true);
+        Button goButton = new Button(this);
+        goButton.setText(R.string.Go);
+        listview.addFooterView(goButton);
         setListAdapter(new CustomAdapter(this, deviceSensors));
         checkedStates = new boolean[listview.getCount()];
 
         /** **/
         //Find the button in the view
-        Button goButton = (Button) findViewById(R.id.goButton);
+//        Button goButton = (Button) findViewById(R.id.goButton);
 
         //create the click listener:
         goButton.setOnClickListener(new View.OnClickListener() {

@@ -4,35 +4,55 @@
     tools:context="fr.scrutch.estelle.vmsalpha.MultipleSensorClickedActivity"
     android:orientation="vertical">
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/CampaignName"
+            android:id="@+id/textView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/saveCampaign"
+            android:onClick="onClickFavorite"
+            android:id="@+id/buttonFav" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Listening sensors"
-        android:id="@+id/textView" />
+        android:text=""
+        android:id="@+id/sensorsList"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Pause"
-        android:onClick="onClickPause"
+        android:text="@string/startRegistering"
+        android:onClick="onClickStart"
         android:id="@+id/button" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Replay"
-        android:onClick="onClickReplay"
+        android:text="@string/stopRegistering"
+        android:onClick="onClickStop"
         android:id="@+id/button2" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Return to the list of sensors"
+        android:text="@string/returnList"
         android:onClick="onClickList"
         android:id="@+id/button3" />
 

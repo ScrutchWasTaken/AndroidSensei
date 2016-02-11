@@ -46,10 +46,11 @@ public class HistoricActivity extends ListActivity {
     public ArrayList<String> getCampaignName() {
         CampaignsDAO dao = new CampaignsDAO(this);
         dao.open();
-        ArrayList<Campaign> campaigns = dao.getAllCampaigns();
+        ArrayList<String> campaigns = dao.getAllCampaigns();
         for(int i=0;i<campaigns.size();i++) {
-            campaignName.add(campaigns.get(i).getName());
+            campaignName.add(campaigns.get(i));
         }
+        dao.close();
         return campaignName;
     }
 

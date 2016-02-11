@@ -75,19 +75,31 @@ public class CampaignsDAO {
         return newCampaign;
     }
 
-    public ArrayList<Campaign> getAllCampaigns() {
-        ArrayList<Campaign> Campaigns = new ArrayList<>();
+    /**
+     * Return unique campaign name to be shown in a list
+     * @return
+     */
+    public ArrayList<String> getAllCampaigns() {
+        ArrayList<Campaign>campaigns = new ArrayList<>();
+        ArrayList<String>uniqueCampaigns = new ArrayList<>();
 
         Cursor cursor = db.query(VMSSQLiteHelper.TABLE_CAMPAIGNS, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
-            Campaign Campaign = cursorToCampaign(cursor);
-            Campaigns.add(Campaign);
+            Campaign campaign = cursorToCampaign(cursor);
+            campaigns.add(campaign);
             cursor.moveToNext();
         }
         cursor.close();
-        return Campaigns;
+
+        for(int i=0 ; i<campaigns.size() ; i++) {
+            String currentCampaignName = campaigns.get(i).getName();
+            if(!uniqueCampaigns.contains(currentCampaignName)){
+                uniqueCampaigns.add(currentCampaignName);
+            }
+        }
+        return uniqueCampaigns;
     }
 
     private Campaign cursorToCampaign(Cursor cursor) {

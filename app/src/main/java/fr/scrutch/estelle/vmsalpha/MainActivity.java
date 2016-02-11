@@ -52,11 +52,7 @@ public class MainActivity extends ListActivity {
                 e.printStackTrace();
             }
         }
-
-        ArrayList<fr.scrutch.estelle.vmsalpha.model.Sensor> tmp = dao.getAllSensors();
-        for (int i = 0; i < tmp.size(); i++) {
-            System.out.println(tmp.get(i).getName());
-        }
+        dao.close();
         /** END OF DB STUFFS **/
 
         final ListView listview = getListView();
